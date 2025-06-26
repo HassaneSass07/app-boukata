@@ -14,6 +14,7 @@ import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import Header from "../../components/Header";
 import { useCart } from "../../context/CartContext";
+import { useRouter } from "expo-router";
 import Footer from "../../components/Footer";
 
 const COLORS = {
@@ -46,6 +47,7 @@ const SHADOWS = {
 };
 
 const FavorisScreen = () => {
+  const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
   
   const {
@@ -95,14 +97,7 @@ const FavorisScreen = () => {
       return;
     }
     
-    Alert.alert(
-      "Passer commande",
-      `Total: ${getCartTotal().toFixed(2)} FCFA\n\nVoulez-vous procéder au paiement ?`,
-      [
-        { text: "Annuler", style: "cancel" },
-        { text: "Continuer", onPress: () => console.log("Redirection vers le paiement") },
-      ]
-    );
+    router.push("/checkout");
   };
 
   const CartItem = ({ item }) => (
@@ -155,7 +150,10 @@ const FavorisScreen = () => {
       <Text style={styles.emptySubtitle}>
         Découvrez nos produits et ajoutez-les à votre panier
       </Text>
-      <TouchableOpacity style={styles.shopButton}>
+      <TouchableOpacity 
+        style={styles.shopButton}
+        onPress={() => router.push("/(tabs)/Achat")}
+      >
         <Text style={styles.shopButtonText}>Commencer mes achats</Text>
       </TouchableOpacity>
     </View>

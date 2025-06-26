@@ -88,8 +88,8 @@ const Sidebar = ({ isOpen, onClose }) => {
     {
       id: "4",
       title: "Pharmacie",
-      icon: "medical-bag",
-      iconType: "MaterialCommunityIcons",
+      icon: "medical-services",
+      iconType: "MaterialIcons",
       route: "/pharmacies-garde"
     },
     {
@@ -191,14 +191,12 @@ const Sidebar = ({ isOpen, onClose }) => {
     if (option.hasDropdown) {
       toggleDropdown(option.id);
     } else {
-      console.log("Navigation vers:", option.route);
       router.push(option.route);
       onClose();
     }
   };
 
   const handleSubmenuPress = (submenuItem) => {
-    console.log("Navigation vers:", submenuItem.route);
     router.push(submenuItem.route);
     onClose();
   };

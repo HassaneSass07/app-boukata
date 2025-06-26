@@ -93,7 +93,6 @@ const Header = ({ title = "Boukata-Ta", showSearch = true, showCart = true }) =>
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
-      console.log("Recherche:", searchQuery);
       setSearchModalOpen(false);
       setSearchQuery("");
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);

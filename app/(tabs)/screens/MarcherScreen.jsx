@@ -17,6 +17,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Header from "../../components/Header";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
+import { useRouter } from "expo-router";
 import Footer from "../../components/Footer";
 
 const COLORS = {
@@ -56,6 +57,7 @@ const categories = [
     iconFamily: "MaterialIcons",
     color: COLORS.error,
     count: "150+ restaurants",
+    route: "/category/alimentation",
   },
   {
     id: "2",
@@ -64,14 +66,16 @@ const categories = [
     iconFamily: "FontAwesome5",
     color: COLORS.success,
     count: "50+ magasins",
+    route: "/category/alimentation",
   },
   {
     id: "3",
     name: "Pharmacie",
-    icon: "medical-bag",
-    iconFamily: "FontAwesome5",
+    icon: "medical-services",
+    iconFamily: "MaterialIcons",
     color: COLORS.secondary,
     count: "30+ pharmacies",
+    route: "/pharmacies-garde",
   },
   {
     id: "4",
@@ -80,6 +84,7 @@ const categories = [
     iconFamily: "FontAwesome5",
     color: COLORS.primary,
     count: "200+ boutiques",
+    route: "/category/mode",
   },
 ];
 
@@ -146,34 +151,51 @@ const SearchBar = React.memo(({ searchQuery, setSearchQuery }) => (
   </View>
 ));
 
-const QuickActions = React.memo(() => (
-  <View style={styles.quickActionsContainer}>
-    <Text style={styles.sectionTitle}>Actions rapides</Text>
-    <View style={styles.quickActions}>
-      <TouchableOpacity style={styles.quickAction}>
-        <MaterialIcons name="local-offer" size={24} color={COLORS.secondary} />
-        <Text style={styles.quickActionText}>Promotions</Text>
-      </TouchableOpacity>
+const QuickActions = React.memo(() => {
+  const router = useRouter();
 
-      <TouchableOpacity style={styles.quickAction}>
-        <MaterialIcons name="favorite" size={24} color={COLORS.error} />
-        <Text style={styles.quickActionText}>Favoris</Text>
-      </TouchableOpacity>
+  return (
+    <View style={styles.quickActionsContainer}>
+      <Text style={styles.sectionTitle}>Actions rapides</Text>
+      <View style={styles.quickActions}>
+        <TouchableOpacity 
+          style={styles.quickAction}
+          onPress={() => router.push("/category/alimentation")}
+        >
+          <MaterialIcons name="local-offer" size={24} color={COLORS.secondary} />
+          <Text style={styles.quickActionText}>Promotions</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.quickAction}>
-        <MaterialIcons name="history" size={24} color={COLORS.primary} />
-        <Text style={styles.quickActionText}>Historique</Text>
-      </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.quickAction}
+          onPress={() => router.push("/favorites")}
+        >
+          <MaterialIcons name="favorite" size={24} color={COLORS.error} />
+          <Text style={styles.quickActionText}>Favoris</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.quickAction}>
-        <MaterialIcons name="local-pharmacy" size={24} color={COLORS.success} />
-        <Text style={styles.quickActionText}>Urgence</Text>
-      </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.quickAction}
+          onPress={() => router.push("/orders")}
+        >
+          <MaterialIcons name="history" size={24} color={COLORS.primary} />
+          <Text style={styles.quickActionText}>Historique</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.quickAction}
+          onPress={() => router.push("/pharmacies-garde")}
+        >
+          <MaterialIcons name="local-pharmacy" size={24} color={COLORS.success} />
+          <Text style={styles.quickActionText}>Urgence</Text>
+        </TouchableOpacity>
+      </View>
     </View>
-  </View>
-));
+  );
+});
 
 const MarcherScreen = () => {
+  const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -207,7 +229,10 @@ const MarcherScreen = () => {
         styles.categoryCard,
         selectedCategory === category.id && styles.categoryCardSelected,
       ]}
-      onPress={() => setSelectedCategory(category.id)}
+      onPress={() => {
+        setSelectedCategory(category.id);
+        router.push(category.route);
+      }}
     >
       <LinearGradient
         colors={[category.color, `${category.color}CC`]}
@@ -223,7 +248,10 @@ const MarcherScreen = () => {
   ));
 
   const StoreCard = React.memo(({ store }) => (
-    <TouchableOpacity style={styles.storeCard}>
+    <TouchableOpacity 
+      style={styles.storeCard}
+      onPress={() => router.push(`/store/${store.id}`)}
+    >
       <View style={styles.storeImageContainer}>
         <Image source={{ uri: store.image }} style={styles.storeImage} />
         <View style={[styles.statusBadge, { backgroundColor: store.isOpen ? COLORS.success : COLORS.error }]}>
@@ -357,7 +385,7 @@ const MarcherScreen = () => {
       <Header
         title="Marketplace"
         cartItemCount={getCartItemsCount()}
-        onCartPress={() => Alert.alert("Panier", "Naviguer vers l'écran du panier.")}
+        onCartPress={() => router.push("/(tabs)/Panier")}
       />
 
       <ScrollView
@@ -400,13 +428,11 @@ const MarcherScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <FlatList
-            data={popularStores}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <StoreCard store={item} />}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.storesList}
-          />
+          <View style={styles.storesList}>
+            {popularStores.map((store) => (
+              <StoreCard key={store.id} store={store} />
+            ))}
+          </View>
         </View>
 
         <View style={styles.promoBanner}>

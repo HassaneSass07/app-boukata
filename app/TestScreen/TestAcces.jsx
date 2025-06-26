@@ -12,6 +12,7 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 const COLORS = {
   primary: "#8B5CF6",
@@ -30,6 +31,7 @@ const services = [
     icon: "hamburger",
     iconFamily: "MaterialCommunityIcons",
     color: COLORS.primary,
+    route: "/category/alimentation",
   },
   {
     id: "2",
@@ -37,6 +39,7 @@ const services = [
     icon: "shopping-basket",
     iconFamily: "FontAwesome5",
     color: COLORS.primary,
+    route: "/category/alimentation",
   },
   {
     id: "3",
@@ -44,6 +47,7 @@ const services = [
     icon: "shopping-bag",
     iconFamily: "FontAwesome5",
     color: COLORS.primary,
+    route: "/(tabs)/Achat",
   },
   {
     id: "4",
@@ -51,10 +55,13 @@ const services = [
     icon: "motorcycle",
     iconFamily: "FontAwesome5",
     color: COLORS.primary,
+    route: "/(tabs)/Achat",
   },
 ];
 
 const Test = () => {
+  const router = useRouter();
+
   const renderServiceIcon = (iconName, iconFamily) => {
     switch (iconFamily) {
       case "FontAwesome5":
@@ -76,8 +83,15 @@ const Test = () => {
     }
   };
 
+  const handleServicePress = (service) => {
+    router.push(service.route);
+  };
+
   const renderServiceItem = ({ item }) => (
-    <TouchableOpacity style={styles.serviceItem}>
+    <TouchableOpacity 
+      style={styles.serviceItem}
+      onPress={() => handleServicePress(item)}
+    >
       <View style={styles.serviceIconContainer}>
         {renderServiceIcon(item.icon, item.iconFamily)}
       </View>
@@ -108,7 +122,10 @@ const Test = () => {
       </View>
 
       <View style={styles.pharmacySection}>
-        <TouchableOpacity style={styles.pharmacyContainer}>
+        <TouchableOpacity 
+          style={styles.pharmacyContainer}
+          onPress={() => router.push("/pharmacies-garde")}
+        >
           <LinearGradient
             colors={['#479045', '#61a65e', '#3a7a3a']}
             style={styles.pharmacyContent}

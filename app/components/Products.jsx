@@ -48,7 +48,7 @@ const productsData = [
     name: "iPhone 15 Pro Max",
     price: 1299.99,
     discount: 15,
-    image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400",
+    image: "https://images.pexels.com/photos/592750/pexels-photo-592750.jpeg?auto=compress&cs=tinysrgb&w=400",
     category: "promo",
     isPromo: true,
   },
@@ -57,7 +57,7 @@ const productsData = [
     name: "Samsung Galaxy S24",
     price: 999.99,
     discount: 20,
-    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400",
+    image: "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=400",
     category: "promo",
     isPromo: true,
   },
@@ -65,42 +65,42 @@ const productsData = [
     id: "3",
     name: "Pizza Margherita",
     price: 12.99,
-    image: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400",
+    image: "https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg?auto=compress&cs=tinysrgb&w=400",
     category: "alimentation",
   },
   {
     id: "4",
     name: "Burger Premium",
     price: 15.5,
-    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
+    image: "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=400",
     category: "alimentation",
   },
   {
     id: "5",
     name: "Salade César",
     price: 9.99,
-    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400",
+    image: "https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&w=400",
     category: "alimentation",
   },
   {
     id: "6",
     name: "Collier Perles",
     price: 89.99,
-    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400",
+    image: "https://images.pexels.com/photos/599643/pexels-photo-599643.jpeg?auto=compress&cs=tinysrgb&w=400",
     category: "bijoux",
   },
   {
     id: "7",
     name: "Boucles d'oreilles Or",
     price: 125.0,
-    image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400",
+    image: "https://images.pexels.com/photos/535632/pexels-photo-535632.jpeg?auto=compress&cs=tinysrgb&w=400",
     category: "bijoux",
   },
   {
     id: "8",
     name: "Bracelet Argent",
     price: 65.99,
-    image: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=400",
+    image: "https://images.pexels.com/photos/611652/pexels-photo-611652.jpeg?auto=compress&cs=tinysrgb&w=400",
     category: "bijoux",
   },
   {
@@ -108,7 +108,7 @@ const productsData = [
     name: "Montre Connectée",
     price: 299.99,
     discount: 10,
-    image: "https://images.unsplash.com/photo-1523275335684-c519a7ee1ac5?w=400",
+    image: "https://images.pexels.com/photos/523275/pexels-photo-523275.jpeg?auto=compress&cs=tinysrgb&w=400",
     category: "promo",
     isPromo: true,
   },
@@ -116,7 +116,7 @@ const productsData = [
     id: "10",
     name: "Casque Audio",
     price: 150.0,
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06f2e0?w=400",
+    image: "https://images.pexels.com/photos/505740/pexels-photo-505740.jpeg?auto=compress&cs=tinysrgb&w=400",
     category: "promo",
     isPromo: true,
   },
@@ -251,11 +251,11 @@ const Products = () => {
         <Text style={styles.headerTitle}>Nos Produits</Text>
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={styles.content}>
         {TAGS_CONFIG.map((tag) => (
           <ProductSection key={tag.id} tag={tag} />
         ))}
-      </ScrollView>
+      </View>
     </View>
   );
 };
@@ -273,6 +273,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     color: COLORS.primary,
+  },
+  content: {
+    flex: 1,
   },
   section: {
     marginBottom: 24,
